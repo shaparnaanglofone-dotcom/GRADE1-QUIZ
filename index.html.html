@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCISM Grade 1 Computer Science Quiz</title>
+<style>
+:root{--blue:#1769d2;--pink:#ff4d91;--yellow:#ffd43b;--green:#19b978;--purple:#8155e8}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Trebuchet MS",Arial,sans-serif;background:linear-gradient(135deg,#b9f3ff,#ffe0ef,#fff0b3);color:#17356d;min-height:100vh;padding:18px}
+.wrap{max-width:850px;margin:auto}
+header{text-align:center;background:#fff;border:5px solid #69d9e8;border-radius:28px;padding:18px;margin-bottom:18px;box-shadow:0 8px 0 #54bfd2}
+header .school{font-weight:900;color:#1769d2;letter-spacing:1px}
+h1{font-size:clamp(1.7rem,5vw,2.7rem);margin:8px 0;color:#f33d86;text-shadow:2px 2px #ffe26b}
+.subtitle{font-weight:bold;background:#ffdf49;display:inline-block;padding:8px 15px;border-radius:20px}
+.panel{background:#fff;border:4px solid #fff;border-radius:25px;padding:clamp(18px,4vw,30px);box-shadow:0 8px 0 #b4c8ef}
+.topline{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:bold;color:#1769d2}
+.progress{height:13px;background:#e8edff;border-radius:20px;overflow:hidden;margin:12px 0 22px}
+.bar{height:100%;width:10%;background:linear-gradient(90deg,#19b978,#4bc8ff,#8155e8);transition:width .2s}
+.emoji{font-size:3.5rem;text-align:center;margin:8px}
+.question{font-size:clamp(1.2rem,3vw,1.65rem);font-weight:900;text-align:center;margin:12px 0 22px}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.option{background:#f5f8ff;border:3px solid #d2ddff;border-radius:16px;padding:15px;text-align:left;font-size:1.05rem;font-weight:bold;color:#17356d;cursor:pointer;min-height:60px}
+.option:hover{border-color:#1769d2;transform:translateY(-1px)}
+.option.selected{background:#e2f8ee;border-color:#19b978}
+.option:focus{outline:3px solid #ffd43b}
+.controls{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+button{border:0;border-radius:25px;padding:13px 24px;font-size:1rem;font-weight:900;cursor:pointer}
+.primary{background:#1769d2;color:white;box-shadow:0 4px #0b469b}
+.secondary{background:#ffe26b;color:#17356d}
+button:disabled{opacity:.45;cursor:not-allowed}
+.note{text-align:center;color:#5a6e9e;font-size:.95rem;margin-top:15px}
+.hidden{display:none!important}
+.result{text-align:center}
+.score{font-size:1.4rem;font-weight:900;color:#1769d2}
+.namebox{width:100%;padding:14px;border:3px solid #c8d6ff;border-radius:14px;font-size:1.1rem;margin:12px 0}
+.certificate{margin-top:20px;background:#fffdf2;border:10px double #f5bb24;border-radius:18px;padding:28px 18px;text-align:center;color:#17356d;position:relative;overflow:hidden}
+.certificate h2{font-size:clamp(2rem,6vw,3.2rem);color:#f33d86;margin:5px}
+.certificate .medal{font-size:3.4rem}
+.certificate .student{font-size:1.7rem;font-weight:900;color:#1769d2;border-bottom:2px dashed #1769d2;display:inline-block;min-width:220px;padding:8px}
+.certificate .award{font-size:1.15rem;line-height:1.7}
+.small{font-size:.9rem}
+@media(max-width:560px){.options{grid-template-columns:1fr}body{padding:10px}.controls button{padding:12px 17px}}
+@media print{body{background:white;padding:0}.wrap>header,.quiz-panel,.result-intro,.result-actions{display:none!important}#certificate{display:block!important;box-shadow:none;margin:0;min-height:90vh}.certificate{border-width:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="school">⭐ SCISM PUBLIC SCHOOL ⭐</div>
+  <h1>Computer Science Quiz!</h1>
+  <div class="subtitle">Grade 1 • Monitor Types & CPU</div>
+  <p>🌈 Think carefully, choose an answer, and do your best! 🌈</p>
+</header>
+
+<section id="quiz" class="panel quiz-panel">
+  <div class="topline"><span id="qcount">Question 1 of 10</span><span id="points">⭐ Score: 0</span></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="emoji" id="emoji">🖥️</div>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <div class="controls"><button class="secondary" id="back" disabled>← Back</button><button class="primary" id="next" disabled>Next question ➜</button></div>
+  <div class="note">Choose one answer for each question. Your certificate comes at the end! 🏆</div>
+</section>
+
+<section id="result" class="panel result hidden">
+  <div class="result-intro">
+    <div style="font-size:3.5rem">🎉🏆🌟</div>
+    <h2>Quiz Completed!</h2>
+    <p class="score" id="finalscore"></p>
+    <p>Wonderful effort! Enter your name to create your certificate.</p>
+    <label for="studentName"><b>Student's full name</b></label>
+    <input class="namebox" id="studentName" maxlength="60" placeholder="Type your name here">
+    <button class="primary" id="makeCert">Create My Certificate 🎓</button>
+  </div>
+  <div id="certificate" class="certificate hidden">
+    <div class="medal">🏅</div>
+    <div style="font-weight:900;letter-spacing:2px">SCISM PUBLIC SCHOOL</div>
+    <h2>Certificate</h2>
+    <h3 style="color:#1769d2;margin-top:0">OF ACHIEVEMENT</h3>
+    <p class="award">This certificate is proudly presented to</p>
+    <div class="student" id="certName"></div>
+    <p class="award">for completing the<br><b>Grade 1 Computer Science Quiz</b><br>on <b>Monitor Types (CRT, LCD, LED) and CPU</b>.</p>
+    <h2 style="font-size:2rem;color:#19a66e">Well Done! 🎉</h2>
+    <p class="award">Keep Learning • Keep Growing • Keep Shining!</p>
+    <div style="display:flex;justify-content:space-around;gap:20px;margin-top:28px;flex-wrap:wrap">
+      <div>⭐ <span id="certScore"></span><br><span class="small">Quiz Score</span></div>
+      <div>____________________<br><span class="small">Teacher's Signature</span></div>
+    </div>
+    <p style="font-size:1.5rem;margin-bottom:0">🌈 🖥️ 📚 🌟</p>
+  </div>
+  <div class="controls result-actions"><button class="secondary" id="retry">Try Again 🔄</button><button class="primary hidden" id="printCert">Print / Save Certificate 🖨️</button></div>
+</section>
+</div>
+<script>
+const questions = [
+ {e:"🖥️",q:"Which monitor is big and heavy?",a:["CRT monitor","LED monitor","LCD monitor","CPU"],c:0},
+ {e:"💧🖥️",q:"What does LCD stand for?",a:["Light Computer Display","Liquid Crystal Display","Large Colour Device","Little Crystal Device"],c:1},
+ {e:"💡🖥️",q:"What does LED stand for?",a:["Light-Emitting Diode","Large Electronic Display","Light Energy Device","Liquid Electronic Display"],c:0},
+ {e:"🧠",q:"What is the CPU often called?",a:["The eyes of the computer","The brain of the computer","The hands of the computer","The screen of the computer"],c:1},
+ {e:"⚙️",q:"What is the main work of the CPU?",a:["To print papers","To play sound only","To process instructions","To show pictures"],c:2},
+ {e:"🖼️",q:"Which part shows pictures and words on the screen?",a:["Monitor","Keyboard","Mouse","Printer"],c:0},
+ {e:"📦🖥️",q:"Which monitor uses a cathode-ray tube and is usually bulky?",a:["LCD","LED","CRT","CPU"],c:2},
+ {e:"✨",q:"Which monitor is usually thin and lightweight?",a:["CRT monitor","Modern LCD or LED monitor","CPU","Printer"],c:1},
+ {e:"🔎",q:"Which one is NOT a type of monitor?",a:["CRT","LCD","LED","CPU"],c:3},
+ {e:"💻",q:"Which part is known as the computer's processing unit?",a:["Speaker","CPU","Monitor","Mouse"],c:1}
+];
+let current=0, answers=Array(questions.length).fill(null);
+const $=id=>document.getElementById(id);
+function render(){
+ const item=questions[current];
+ $("qcount").textContent=`Question ${current+1} of ${questions.length}`;
+ $("points").textContent=`⭐ Answered: ${answers.filter(v=>v!==null).length}/${questions.length}`;
+ $("bar").style.width=`${(current+1)/questions.length*100}%`;
+ $("emoji").textContent=item.e; $("question").textContent=item.q;
+ $("options").innerHTML="";
+ item.a.forEach((answer,i)=>{
+   const b=document.createElement("button"); b.className="option"+(answers[current]===i?" selected":"");
+   b.textContent=String.fromCharCode(65+i)+". "+answer;
+   b.setAttribute("aria-pressed",answers[current]===i?"true":"false");
+   b.onclick=()=>{answers[current]=i;render()};
+   $("options").appendChild(b);
+ });
+ $("back").disabled=current===0;
+ $("next").disabled=answers[current]===null;
+ $("next").textContent=current===questions.length-1?"Finish quiz 🏁":"Next question ➜";
+}
+$("back").onclick=()=>{if(current>0){current--;render()}};
+$("next").onclick=()=>{
+ if(answers[current]===null)return;
+ if(current<questions.length-1){current++;render()}
+ else showResult();
+};
+function showResult(){
+ const score=answers.reduce((sum,a,i)=>sum+(a===questions[i].c?1:0),0);
+ $("quiz").classList.add("hidden"); $("result").classList.remove("hidden");
+ $("finalscore").textContent=`You scored ${score} out of ${questions.length}! ⭐`;
+}
+$("makeCert").onclick=()=>{
+ const name=$("studentName").value.trim();
+ if(!name){$("studentName").focus();$("studentName").placeholder="Please enter your name first";return}
+ const score=answers.reduce((sum,a,i)=>sum+(a===questions[i].c?1:0),0);
+ $("certName").textContent=name;
+ $("certScore").textContent=`${score} / ${questions.length}`;
+ $("certificate").classList.remove("hidden");
+ $("printCert").classList.remove("hidden");
+ $("certificate").scrollIntoView({behavior:"smooth",block:"start"});
+};
+$("printCert").onclick=()=>window.print();
+$("retry").onclick=()=>{current=0;answers=Array(questions.length).fill(null);$("studentName").value="";$("certificate").classList.add("hidden");$("printCert").classList.add("hidden");$("result").classList.add("hidden");$("quiz").classList.remove("hidden");render();window.scrollTo({top:0,behavior:"smooth"})};
+render();
+</script>
+</body>
+</html>
